@@ -1,0 +1,105 @@
+{{ csrfField() }}
+
+<div class="mb-3">
+  <label for="kodeBarang" class="form-label">Kode Barang</label>
+  <input
+    type="text"
+    class="form-control {{ flashMessages.has('errors.kodeBarang') ? 'is-invalid' : '' }}"
+    id="kodeBarang"
+    name="kodeBarang"
+    value="{{ old('kodeBarang', barang?.kodeBarang || '') }}"
+    required
+  >
+  @if(flashMessages.has('errors.kodeBarang'))
+    <div class="invalid-feedback">
+      {{ flashMessages.get('errors.kodeBarang') }}
+    </div>
+  @endif
+</div>
+
+<div class="mb-3">
+  <label for="nama" class="form-label">Nama Barang</label>
+  <input
+    type="text"
+    class="form-control {{ flashMessages.has('errors.nama') ? 'is-invalid' : '' }}"
+    id="nama"
+    name="nama"
+    value="{{ old('nama', barang?.nama || '') }}"
+    required
+  >
+  @if(flashMessages.has('errors.nama'))
+    <div class="invalid-feedback">
+      {{ flashMessages.get('errors.nama') }}
+    </div>
+  @endif
+</div>
+
+<div class="mb-3">
+  <label for="jumlah" class="form-label">Jumlah</label>
+  <input
+    type="number"
+    class="form-control {{ flashMessages.has('errors.jumlah') ? 'is-invalid' : '' }}"
+    id="jumlah"
+    name="jumlah"
+    value="{{ old('jumlah', barang?.jumlah || '0') }}"
+    required
+  >
+  @if(flashMessages.has('errors.jumlah'))
+    <div class="invalid-feedback">
+      {{ flashMessages.get('errors.jumlah') }}
+    </div>
+  @endif
+</div>
+
+<div class="mb-3">
+  <label for="kategoriId" class="form-label">Kategori</label>
+  <select
+    class="form-select {{ flashMessages.has('errors.kategoriId') ? 'is-invalid' : '' }}"
+    id="kategoriId"
+    name="kategoriId"
+    required
+  >
+    <option value="">Pilih Kategori</option>
+    @each(kategori in kategoris)
+      <option
+        value="{{ kategori.id }}"
+        {{ (old('kategoriId', barang?.kategoriId) == kategori.id) ? 'selected' : '' }}
+      >
+        {{ kategori.namaKategori }}
+      </option>
+    @endeach
+  </select>
+  @if(flashMessages.has('errors.kategoriId'))
+    <div class="invalid-feedback">
+      {{ flashMessages.get('errors.kategoriId') }}
+    </div>
+  @endif
+</div>
+
+<div class="mb-3">
+  <label for="lokasiId" class="form-label">Lokasi</label>
+  <select
+    class="form-select {{ flashMessages.has('errors.lokasiId') ? 'is-invalid' : '' }}"
+    id="lokasiId"
+    name="lokasiId"
+    required
+  >
+    <option value="">Pilih Lokasi</option>
+    @each(lokasi in lokasis)
+      <option
+        value="{{ lokasi.id }}"
+        {{ (old('lokasiId', barang?.lokasiId) == lokasi.id) ? 'selected' : '' }}
+      >
+        {{ lokasi.namaLokasi }} - {{ lokasi.gedung }}
+      </option>
+    @endeach
+  </select>
+  @if(flashMessages.has('errors.lokasiId'))
+    <div class="invalid-feedback">
+      {{ flashMessages.get('errors.lokasiId') }}
+    </div>
+  @endif
+</div>
+
+<a href="{{ route('barang.index') }}" class="btn btn-secondary">Batal</a>
+<button type="submit" class="btn btn-primary">Simpan</button>

@@ -1,0 +1,14 @@
+@layout('components/layouts/main')
+@set('title', 'Selamat Datang')
+
+@section('content')
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Aplikasi Inventarisasi Barang</h1>
+    <p class="col-md-8 fs-4">Selamat datang di sistem manajemen inventaris. Silakan login untuk mulai mengelola data barang.</p>
+    @if(!auth.user)
+      <a href="/login" class="btn btn-primary btn-lg" type="button">Login Sekarang</a>
+    @endif
+  </div>
+</div>
+@endsection

@@ -1,0 +1,50 @@
+@layout('components/layouts/main')
+@set('title', 'Daftar Barang')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Daftar Barang</h3>
+  <a href="{{ route('barang.create') }}" class="btn btn-primary">Tambah Barang</a>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Kode</th>
+          <th>Nama Barang</th>
+          <th>Kategori</th>
+          <th>Lokasi</th>
+          <th>Jumlah</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(barang in barangs)
+        <tr>
+          <td>{{ barang.kodeBarang }}</td>
+          <td>{{ barang.nama }}</td>
+          <td>{{ barang.kategori.namaKategori }}</td>
+          <td>{{ barang.lokasi.namaLokasi }} - {{ barang.lokasi.gedung }}</td>
+          <td>{{ barang.jumlah }}</td>
+          <td class="d-flex flex-wrap gap-1">
+            <a href="{{ route('barang.edit', { id: barang.id }) }}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{{ route('mutasi.show', { id: barang.id }) }}" class="btn btn-sm btn-info">Mutasi</a>
+            <a href="{{ route('penghapusan.show', { id: barang.id }) }}" class="btn btn-sm btn-secondary">Hapus Rusak</a>
+            <form action="{{ route('barang.destroy', { id: barang.id }) }}?_method=DELETE" method="POST" class="d-inline">
+              {{ csrfField() }}
+              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin?')">Hapus</button>
+            </form>
+          </td>
+        </tr>
+        @else
+        <tr>
+          <td colspan="6" class="text-center">Belum ada data barang.</td>
+        </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+</div>
+@endsection
